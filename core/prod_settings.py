@@ -11,7 +11,7 @@ SECRET_KEY = '5ik@lvf!1e9y$ymk!goix36or^66bm9*tw@eeg#9i!@hd95sje';
 
 DATABASES['default'].update(dj_database_url.config());
 
-ALLOWED_HOSTS = ['smsv.herokuapp.com'];
+ALLOWED_HOSTS = ['heroku-dj.herokuapp.com'];
 
 # CONFIGURATION DE WHITENOISE
 # ================================================================
