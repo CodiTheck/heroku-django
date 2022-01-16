@@ -1,4 +1,5 @@
 import logging
+from django.conf import settings
 
 
 logger_format = "[%(asctime)s %(msecs)03dms] [PID %(process)d %(threadName)s] %(message)s";
@@ -7,7 +8,8 @@ logging.basicConfig(format=logger_format, level=logging.INFO, datefmt="%Y-%m-%d 
 
 def log(message):
     """ Function that is used to print the logs. """
-    logging.info(message);
+    if settings.DEBUG:
+        logging.info(message);
 
 
 pass;
