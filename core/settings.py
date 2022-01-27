@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_filters',
+    'guardian',
 ]
 
 REST_FRAMEWORK = {
@@ -57,6 +59,10 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 8,
 };
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # this is default
+    'guardian.backends.ObjectPermissionBackend',
+);
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # CORS HEADERS
