@@ -1,13 +1,14 @@
 import dj_database_url
 from core.settings import *
+from stdlib import get_env_var
 
 
 DEBUG = False;
 TEMPLATE_DEBUG = False;
 
-
-
-SECRET_KEY = '5ik@lvf!1e9y$ymk!goix36or^66bm9*tw@eeg#9i!@hd95sje';
+# You can go to https://djecrety.ir/
+# to generate a new key
+# SECRET_KEY = get_env_var("SECRET_KEY", "");
 
 DATABASES['default'].update(dj_database_url.config());
 
