@@ -113,11 +113,11 @@ DATABASES = {
 # DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': get_env_var("DB_NAME"),
-#        'USER': get_env_var("USERNAME"),
-#        'PASSWORD': get_env_var("PASSWORD"),
-#        'HOST': get_env_var("HOST"),
-#        'PORT': get_env_var('PORT'),
+#        'NAME': get_env_var("DB_NAME", ''),
+#        'USER': get_env_var("USERNAME", ''),
+#        'PASSWORD': get_env_var("PASSWORD", ''),
+#        'HOST': get_env_var("HOST", ''),
+#        'PORT': get_env_var('PORT', ''),
 #    }
 # };
 
