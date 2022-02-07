@@ -6,6 +6,10 @@ from stdlib import get_env_var
 DEBUG = False;
 TEMPLATE_DEBUG = False;
 
+# To force HTTPs communication to server
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https');
+SECURE_SSL_REDIRECT     = True;
+
 # You can go to https://djecrety.ir/
 # to generate a new key
 # SECRET_KEY = get_env_var("SECRET_KEY", "");
