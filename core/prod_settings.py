@@ -10,12 +10,10 @@ TEMPLATE_DEBUG = False;
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https');
 SECURE_SSL_REDIRECT     = True;
 
-# You can go to https://djecrety.ir/
-# to generate a new key
-# SECRET_KEY = get_env_var("SECRET_KEY", "");
-
+# Heroku database configuration
 DATABASES['default'].update(dj_database_url.config());
 
+# HOST list allowed by this server
 ALLOWED_HOSTS = ['heroku-dj.herokuapp.com'];
 
 # CONFIGURATION DE WHITENOISE
