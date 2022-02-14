@@ -222,7 +222,9 @@ Sur héroku, au niveau des configurations de ton application, définir deux vari
 les variables d'environnement : `SECRET_KEY` et `DJANGO_SETTINGS_MODULE` qui représentes respectievement
 la `clé secrete` utilisée par le serveur et le fichier de `configuration globale du projet Django`.
 
+<br/>
 <img src="images/heroku-dj.png" width="35%" height="35%" align="right" />
+<br/>
 
 - SECRET_KEY : clé secrete
 Tu dois renseigner une clé secrete différente de celle qui se trouve dans le fichier `core/settings.py`, 
