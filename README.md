@@ -1,7 +1,6 @@
 # Heroku Django Project (HDP)
 
 <br/>
-<br/>
 
 ## Installation
 
@@ -13,7 +12,6 @@ sudo apt install python3-pip
 Il faut s'assurer de la version de python qui est installée. La version de python
 utilisée est `python 3.9.7`. Vous pouvez aussi utiliser version version `3.8`.
 
-<br/>
 
 ### Installation de venv
 ```
@@ -23,7 +21,6 @@ OU
 ```
 sudo pip3 install virtualenv
 ```
-<br/>
 
 ### Créer un environnement virtuel
 ```
@@ -33,19 +30,16 @@ OU
 ```
 virtualenv env -p python3
 ```
-<br/>
 
 ### Démarrage de l'environnement
 ```
 source env/bin/activate
 ```
-<br/>
 
 ### Installation des dépendances
 ```
 pip install -r requirements.txt
 ```
-<br/>
 <br/>
 
 ## Configuration du projet
@@ -68,11 +62,9 @@ sudo su - postgres
 ```
 psql
 ```
-<br/>
 
 ### Création de la base de données
 La création de la base de données se fera en deux parties:
-<br/>
 
 - Première partie
 Exécutez les trois commandes SQL suivantes :
@@ -91,7 +83,6 @@ CREATE DATABASE db_name OWNER user_name;
 GRANT CONNECT ON DATABASE db_name TO user_name;
 ```
 Déconnectez vous enfin du SGBDR en faisant deux fois `CTRL + D`.
-<br/>
 
 - Seconde partie
 1. Il faut créer un fichier `.env` à la racine du dossier du projet.
@@ -109,7 +100,7 @@ PORT=5432
 ```
 `PS` : Si le port `5432` ne marche pas, alors essayez avec le port `5433`.
 
-3. Exécutez les commandes suivantes pour faire la migration 
+3. Exécutez les commandes suivantes pour faire la migration
 des modèles de base de données
 ```
 ./manage.py makemigrations
@@ -117,7 +108,6 @@ des modèles de base de données
 ```
 ./manage.py migrate
 ```
-<br/>
 
 ### Création d'un super utilisateur pour l'espace admin
 ```
@@ -125,7 +115,6 @@ des modèles de base de données
 ```
 
 Vous pouvez renseigner juste le `username` et le `password`.
-<br/>
 
 ### Démarrage du serveur de django
 ```
@@ -144,28 +133,23 @@ Quit the server with CONTROL-C.
 ```
 
 <br/>
-<br/>
-
 
 ## Hébergement du serveur sur Heroku
 Concernant l'hébergement du serveur sur Heroku, tu dois faire les choses suivantes:
 1. créer l'application sur Heroku en premier;
 2. clonner ce projet dans votre répertoire de travail;
 3. redéfinir l'URL HOST du serveur de l'application dans le fichier `core/prod_settings.py`;
-4. sur héroku, au niveau des configurations de ton application, définir deux variables dans 
+4. sur héroku, au niveau des configurations de ton application, définir deux variables dans
 les variables d'environnement : `SECRET_KEY` et `DJANGO_SETTINGS_MODULE` qui représentes respectievement
 la `clé secrete` utilisée par le serveur et le fichier de `configuration globale du projet Django`;
 5. connecter l'application créée sur Heroku à ton l'application;
 6. Envoyer l'application par `Git` au serveur Heroku.
 
-<br/>
 
 ### Clonner ce projet dans votre répertoire de travail
 ```sh
 git clone git@github.com:CodiTheck/heroku-django.git
 ```
-
-<br/>
 
 ### Redéfinir l'URL HOST du serveur
 Tu dois redéfinir l'URL HOST du serveur de l'application dans le fichier `core/prod_settings.py`
@@ -215,19 +199,16 @@ ALLOWED_HOSTS = ['monapplication.herokuapp.com'];
 
 # ...
 ```
-<br/>
 
 ### Définir des variables d'environnements nécessaire
-Sur héroku, au niveau des configurations de ton application, définir deux variables dans 
+Sur héroku, au niveau des configurations de ton application, définir deux variables dans
 les variables d'environnement : `SECRET_KEY` et `DJANGO_SETTINGS_MODULE` qui représentes respectievement
 la `clé secrete` utilisée par le serveur et le fichier de `configuration globale du projet Django`.
 
-<br/>
 ![alt Onglet des configuration de l'application sur Heroku](https://github.com/CodiTheck/heroku-django/blob/main/images/heroku-dj.png)
-<br/>
 
 - SECRET_KEY : clé secrete
-Tu dois renseigner une clé secrete différente de celle qui se trouve dans le fichier `core/settings.py`, 
+Tu dois renseigner une clé secrete différente de celle qui se trouve dans le fichier `core/settings.py`,
 pour cela tu peux te rendre sur [ce site](https://djecrety.ir/) qui te permettra de générer une clé secrete propre à ton application
 que tu vas ensuite copier et venir coller dans ce champ.
 
@@ -237,7 +218,6 @@ Cette dernière représente le fichier de configuration de mise en production de
 Ce sont les configurations qui se trouvent dans ce fichier qui seront utilisées par le serveur,
 une fois en ligne.
 
-<br/>
 
 ### Connecter l'application créée sur Heroku à ton l'application;
 Il s'agit de configurer le dépôt avec le dépôt distant du serveur SVM de Heroku. Pour ce faire,
@@ -245,7 +225,6 @@ tape juste la commande suivante: si on suppose que ton application s'appelle : `
 ```sh
 heroku git:remote -a monapplication
 ```
-<br/>
 
 ### Envoyer l'application par Git au serveur Heroku.
 En supposant que tout s'est bien passé, alors tu es enfin prêt à déployer ton application en ligne !
@@ -263,11 +242,9 @@ git commit -m "Allowed HOST is defined."
 git push heroku master
 ```
 
-<br/>
-
 ### C'est finit
 Après avoir pris le temps d'allumer un bon `Nightcore` dans ton répertoire de musique, tu peux maintenant
-frimer en lançant ton super appli via ton lien : 
+frimer en lançant ton super appli via ton lien :
 [https://monapplication.herokuapp.com](https://monapplication.herokuapp.com) .
 
 """ Euh... N'oublie pas de me donner une note avant de te barrer l'amis. """
