@@ -4,6 +4,11 @@
 
 ## Installation
 
+### Téléchargement du dépôt
+```sh
+git clone https://github.com/CodiTheck/heroku-django.git
+```
+
 ### Installation de python3
 ```
 sudo apt install python3
@@ -155,7 +160,7 @@ commandes suivantes:
 
 ![alt](./images/terminal_djproject.png)
 
-1. Installer le CLI de Heroku
+#### 1. Installer le CLI de Heroku
 ```sh
 sudo snap install heroku --classic
 ```
@@ -164,28 +169,63 @@ sudo snap install heroku --classic
 > CLI de heroku par `snap`. C'est à dire avant que la commande ci-dessus
 > ne marche.
 
-2. Se connecter à ton compte
+#### 2. Se connecter à ton compte
 Une fois l'installation terminé, tu peux maintenant te connecter à ton
 compte `Heroku` via le CLI.
 ```sh
 heroku login
 ```
 
-3. Configure ton projet avec Git
+Si le message suivant s'affiche, alors appuis sur la touche `ENTRER` de 
+ton clavier pour continuer.
+
+```
+heroku: Press any key to open up the browser to login or q to exit:
+```
+
+Après avoir saisi tes identifiants dans le navigateur qui s'est ouvert,
+si tout va bien, alors tu arras les deux derniers messages suivants
+imprimés dans ton terminal.
+```
+...
+
+Logging in... done
+Logged in as monemail@email.com
+```
+
+Au cas où la commande `heroku login` t'affiche l'erreur suivante :
+```
+Command 'heroku' is available in '/snap/bin/heroku'
+The command could not be located because '/snap/bin' is not included in the PATH environment variable.
+heroku: command not found
+```
+Alors tape la commande suivante pour résoudre son cas :
+```sh
+sudo ln -s /snap/bin/heroku /bin/heroku
+```
+puis reéssaie la commande `heroku login`.
+
+
+#### 3. Configure ton projet avec Git
+
+Si tu avais déjà configuré ton projet avec Git ou tu avais clonner mon
+dépôt comme je l'ai indiqué plus haut, alors pas besoin d'exécuter la 
+commande suivante. Dans le cas contraire, tu dois exécuter la commande:
 ```sh
 git init
 ```
 
+
 > **NOTE** : Ceci est necessaire pour la suite.
 
 
-4. Créer ton application sur heroku
-Si on suppose que le nom que tu veux donner à ton application est `monapplication`, alors tu exécute la commande suivante:
+#### 4. Créer ton application sur heroku
+Si on suppose que le nom que tu veux donner à ton application est `monapplication`, alors tu exécute la commande suivante :
 ```sh
 heroku create monapplication
 ```
 
-5. Créer une base de données à ton application
+#### 5. Créer une base de données à ton application
 ```sh
 heroku addons:create heroku-postgresql
 ```
@@ -280,7 +320,7 @@ heroku git:remote -a monapplication
 En supposant que tout s'est bien passé, alors tu es enfin prêt à déployer ton application en ligne !
 - tu les changements précédement apportés au fichier `core/prod_settings.py` :
 ```sh
-git add core/prod_settings.py
+git add -A
 ```
 ensuite :
 ```sh
