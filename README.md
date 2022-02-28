@@ -66,7 +66,7 @@ psql
 ### Création de la base de données
 La création de la base de données se fera en deux parties:
 
-- Première partie
+#### Première partie
 Exécutez les trois commandes SQL suivantes :
 1. Création d'un utilisateur :
 ```sql
@@ -84,7 +84,7 @@ GRANT CONNECT ON DATABASE db_name TO user_name;
 ```
 Déconnectez vous enfin du SGBDR en faisant deux fois `CTRL + D`.
 
-- Seconde partie
+#### Seconde partie
 1. Il faut créer un fichier `.env` à la racine du dossier du projet.
 ```
 touch .env
@@ -98,7 +98,8 @@ DB=db_name
 HOST=127.0.0.1
 PORT=5432
 ```
-`PS` : Si le port `5432` ne marche pas, alors essayez avec le port `5433`.
+
+> Si le port `5432` ne marche pas, alors essayez avec le port `5433`.
 
 3. Exécutez les commandes suivantes pour faire la migration
 des modèles de base de données
@@ -146,9 +147,47 @@ la `clé secrete` utilisée par le serveur et le fichier de `configuration globa
 6. Envoyer l'application par `Git` au serveur Heroku.
 
 
-### Clonner ce projet dans votre répertoire de travail
+### Créer l'application sur Heroku
+Pour créer l'application heroku pour héberger ton programme serveur, il
+faut simplement te connecter sur le site de [heroku](https://heroku.com)
+ou accède au dossier de ton projet via le terminal et exécuter les
+commandes suivantes:
+
+![alt](./images/terminal_djproject.png)
+
+1. Installer le CLI de Heroku
 ```sh
-git clone git@github.com:CodiTheck/heroku-django.git
+sudo snap install heroku --classic
+```
+> **NOTE** : Si tu utilise `Kali`, alors tu dois taper cette commande
+> `sudo systemctl start snapd.service` avant de pouvoir installer le
+> CLI de heroku par `snap`. C'est à dire avant que la commande ci-dessus
+> ne marche.
+
+2. Se connecter à ton compte
+Une fois l'installation terminé, tu peux maintenant te connecter à ton
+compte `Heroku` via le CLI.
+```sh
+heroku login
+```
+
+3. Configure ton projet avec Git
+```sh
+git init
+```
+
+> **NOTE** : Ceci est necessaire pour la suite.
+
+
+4. Créer ton application sur heroku
+Si on suppose que le nom que tu veux donner à ton application est `monapplication`, alors tu exécute la commande suivante:
+```sh
+heroku create monapplication
+```
+
+5. Créer une base de données à ton application
+```sh
+heroku addons:create heroku-postgresql
 ```
 
 ### Redéfinir l'URL HOST du serveur
@@ -205,7 +244,7 @@ Sur héroku, au niveau des configurations de ton application, définir deux vari
 les variables d'environnement : `SECRET_KEY` et `DJANGO_SETTINGS_MODULE` qui représentes respectievement
 la `clé secrete` utilisée par le serveur et le fichier de `configuration globale du projet Django`.
 
-![alt Onglet des configuration de l'application sur Heroku](https://github.com/CodiTheck/heroku-django/blob/main/images/heroku-dj.png)
+![alt Onglet des configuration de l'application sur Heroku](./images/heroku-dj.png)
 
 - SECRET_KEY : clé secrete
 Tu dois renseigner une clé secrete différente de celle qui se trouve dans le fichier `core/settings.py`,
@@ -219,9 +258,20 @@ Ce sont les configurations qui se trouvent dans ce fichier qui seront utilisées
 une fois en ligne.
 
 
-### Connecter l'application créée sur Heroku à ton l'application;
-Il s'agit de configurer le dépôt avec le dépôt distant du serveur SVM de Heroku. Pour ce faire,
+### Connecter l'application créée sur Heroku à ton l'application
+
+
+Il s'agit de configurer le dépôt local avec le dépôt distant du serveur SVM de Heroku. Pour ce faire,
 tape juste la commande suivante: si on suppose que ton application s'appelle : `monapplication`
+
+> **NOTE** : Cette étape n'est plus necessaire, si tu as suivis l'`étape 1 : Créer l'application sur Heroku` à la lettre. Car lorsqu'on crée une
+> application heroku via le CLI dans le dossier d'un projet déjà
+> configuré avec Git, alors, heroku profite pour connecter le dépôt local
+> de l'application au dépôt distant de l'application qui est créée sur 
+> son serveur de production.
+
+Voici donc la commande pour connecter ton dépôt local au dépôt distant de
+Heroku :
 ```sh
 heroku git:remote -a monapplication
 ```
