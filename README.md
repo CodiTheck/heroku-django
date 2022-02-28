@@ -324,7 +324,7 @@ git add -A
 ```
 ensuite :
 ```sh
-git commit -m "Allowed HOST is defined."
+git commit -m "Allowed HOST is defined and All is ready !"
 ```
 
 - tu pousses le projet sur le serveur SVN de `Heroku` en faisant :
@@ -332,10 +332,21 @@ git commit -m "Allowed HOST is defined."
 git push heroku master
 ```
 
-### C'est finit
+### Création des tables de la base de données
+Si l'envoie de l'application a été un succès, alors n'oublie pas de créer
+les différentes tables de la base de données de ton application sur
+Heroku. Pour ce faire, exécute la commande suivante :
+```sh
+heroku run python manage.py migrate
+```
+
+### C'est finit !
 Après avoir pris le temps d'allumer un bon `Nightcore` dans ton répertoire de musique, tu peux maintenant
-frimer en lançant ton super appli via ton lien :
+frimer en lançant ta superbe appli via ton lien :
 [https://monapplication.herokuapp.com](https://monapplication.herokuapp.com) .
 
 """ Euh... N'oublie pas de me donner une note avant de te barrer l'amis. """
+
+<br/>
+<br/>
 
