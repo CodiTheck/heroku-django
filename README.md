@@ -146,7 +146,7 @@ ton application pour se connecter.
 ```sql
 GRANT ALL ON SCHEMA public TO user_name;
 ```
-```sh
+```sql
 GRANT ALL ON SCHEMA public TO public;
 ```
 
