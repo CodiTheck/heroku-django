@@ -8,6 +8,7 @@
 ```sh
 git clone https://github.com/CodiTheck/heroku-django.git
 ```
+Fais en bonne usage !
 
 ### Installation de python3
 ```sh
@@ -15,7 +16,7 @@ sudo apt install python3
 sudo apt install python3-pip
 ```
 Il faut s'assurer de la version de python qui est installée. La version de python
-utilisée est `python 3.9.7`. Vous pouvez aussi utiliser version version `3.8`.
+utilisée est `python 3.9.7`. Tu peux aussi utiliser la version `3.8`.
 
 
 ### Installation de venv
@@ -51,7 +52,7 @@ pip install -r requirements.txt
 
 ### Configuration de la base de données
 Le système de gestion de base de données utilisé est `PostgreSQL`. Pour l'installer,
-tapez la commande suivante :
+tape la commande suivante :
 ```sh
 sudo apt install postgresql
 ```
@@ -123,8 +124,11 @@ tous les schémas que tu as créé. Dans cet exemple, il n'y a qu'un seul schém
 Connecte toi en mode `root` avec les deux commandes suivantes :
 ```sh
 sudo su - postgres
+```
+```sh
 psql
 ```
+
 Ensuite connecte toi en tent que `user_name` à `db_name` :
 ```sh
 \c user_name db_name
@@ -141,6 +145,8 @@ Et enfin, il ne faut pas oublier de redonner les droit d'accès du schéma à l'
 ton application pour se connecter.
 ```sql
 GRANT ALL ON SCHEMA public TO user_name;
+```
+```sh
 GRANT ALL ON SCHEMA public TO public;
 ```
 
