@@ -10,7 +10,7 @@ git clone https://github.com/CodiTheck/heroku-django.git
 ```
 
 ### Installation de python3
-```
+```sh
 sudo apt install python3
 sudo apt install python3-pip
 ```
@@ -19,30 +19,30 @@ utilisée est `python 3.9.7`. Vous pouvez aussi utiliser version version `3.8`.
 
 
 ### Installation de venv
-```
+```sh
 sudo apt install python3-venv
 ```
 OU
-```
+```sh
 sudo pip3 install virtualenv
 ```
 
 ### Créer un environnement virtuel
-```
+```sh
 python3 -m venv env
 ```
 OU
-```
+```sh
 virtualenv env -p python3
 ```
 
 ### Démarrage de l'environnement
-```
+```sh
 source env/bin/activate
 ```
 
 ### Installation des dépendances
-```
+```sh
 pip install -r requirements.txt
 ```
 <br/>
@@ -52,19 +52,19 @@ pip install -r requirements.txt
 ### Configuration de la base de données
 Le système de gestion de base de données utilisé est `PostgreSQL`. Pour l'installer,
 tapez la commande suivante :
-```
+```sh
 sudo apt install postgresql
 ```
 
 Démarrez ensuite le service du SGBDR avec la commande suivante:
-```
+```sh
 sudo service postgresql start
 ```
 Connectez vous en mode `root` avec les deux commandes suivantes :
-```
+```sh
 sudo su - postgres
 ```
-```
+```sh
 psql
 ```
 
@@ -113,6 +113,35 @@ des modèles de base de données
 ```
 ```
 ./manage.py migrate
+```
+
+### Nettoyage de la base de données
+Cette section est facultative. Mais, il peut arriver un jour où tu aurras besoin de néttoyer toutes
+les tables de la base de données. Alors, c'est simple. Pour y parvcenir, tu peux simplement supprimer
+tous les schémas que tu as créé. Dans cet exemple, il n'y a qu'un seul schéma que tu vas néttoyer : `public`.
+<br/>
+Connecte toi en mode `root` avec les deux commandes suivantes :
+```sh
+sudo su - postgres
+psql
+```
+Ensuite connecte toi en tent que `user_name` à `db_name` :
+```sh
+\c user_name db_name
+```
+Maintenant, tu peut supprimer le schéma :
+```sql
+DROP SCHEMA public CASCADE;
+```
+Ensuite tu le recrée avec la commande SQL suivante :
+```sql
+CREATE SCHEMA public;
+```
+Et enfin, il ne faut pas oublier de redonner les droit d'accès du schéma à l'utilisateur utilisé par
+ton application pour se connecter.
+```sql
+GRANT ALL ON SCHEMA public TO user_name;
+GRANT ALL ON SCHEMA public TO public;
 ```
 
 ### Création d'un super utilisateur pour l'espace admin
