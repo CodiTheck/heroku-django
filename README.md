@@ -2,13 +2,16 @@
 
 <br/>
 
-## Installation
 
-### Téléchargement du dépôt
+## Téléchargement du dépôt
 ```sh
 git clone https://github.com/CodiTheck/heroku-django.git
 ```
 Fais en bonne usage !
+
+<br/>
+
+## Installation et configuration
 
 ### Installation de python3
 ```sh
@@ -16,7 +19,7 @@ sudo apt install python3
 sudo apt install python3-pip
 ```
 Il faut s'assurer de la version de python qui est installée. La version de python
-utilisée est `python 3.9.7`. Tu peux aussi utiliser la version `3.8`.
+utilisée est `python 3.9.12`. Tu peux aussi utiliser la version `3.8`.
 
 
 ### Installation de venv
@@ -48,20 +51,20 @@ pip install -r requirements.txt
 ```
 <br/>
 
-## Configuration du projet
+### Création de la base de données
+La création de la base de données se fera en deux parties :
 
-### Configuration de la base de données
-Le système de gestion de base de données utilisé est `PostgreSQL`. Pour l'installer,
-tape la commande suivante :
+#### Première partie
+Le système de gestion de base de données utilisé est `PostgreSQL`. Pour l'installer, tape la commande suivante :
 ```sh
 sudo apt install postgresql
 ```
 
-Démarrez ensuite le service du SGBDR avec la commande suivante:
+Démarre ensuite le service du SGBDR avec la commande suivante:
 ```sh
 sudo service postgresql start
 ```
-Connectez vous en mode `root` avec les deux commandes suivantes :
+Connecte toi en mode `root` avec les deux commandes suivantes :
 ```sh
 sudo su - postgres
 ```
@@ -69,10 +72,7 @@ sudo su - postgres
 psql
 ```
 
-### Création de la base de données
-La création de la base de données se fera en deux parties:
-
-#### Première partie
+#### Seconde partie
 Exécutez les trois commandes SQL suivantes :
 1. Création d'un utilisateur :
 ```sql
@@ -88,26 +88,90 @@ CREATE DATABASE db_name OWNER user_name;
 ```sql
 GRANT CONNECT ON DATABASE db_name TO user_name;
 ```
-Déconnectez vous enfin du SGBDR en faisant deux fois `CTRL + D`.
 
-#### Seconde partie
-1. Il faut créer un fichier `.env` à la racine du dossier du projet.
-```
-touch .env
+4. Note bien les information que tu as utilisées pour créer l'utilisateur et la base de données quelque part,
+car tu en aura besoin pour configurer ton programme. Dans le cas présent, on a :
+- Nom de la base de données [DB_NAME] : db_name
+- Non de l'utilisateur [USERNAME] : user_name
+- Mot de passe [PASSWORD] : secretpassword
+
+5. Déconnectez vous enfin du SGBDR en faisant deux fois `CTRL + D`.
+
+### Création des connexions du serveur WEB à la base de données
+1. Il faut créer un fichier `.env` à la racine du dossier du projet à partir de l'exemple `.env_example` :
+```sh
+cp .env_example .env
 ```
 
-2. Insérer les informations suivantes dans le fichier `.env` :
+2. Insérer les informations que tu avais noté à l'étape `4` de la `seconde partie` de la procédure de `Création de la base de données` dans le fichier `.env` :
 ```
-USERDB=user_name
-PASSWORDDB=secretpassword
-DB=db_name
+DB_NAME=db_name
+USERNAME=user_name
+PASSWORD=secretpassword
 HOST=127.0.0.1
 PORT=5432
 ```
 
 > Si le port `5432` ne marche pas, alors essayez avec le port `5433`.
 
-3. Exécutez les commandes suivantes pour faire la migration
+3. Ouvre le fichier `core/settings.py` et rend toi à la ligne où c'est marqué `Database` dans les commentaires.
+
+```python
+...
+
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+DATABASES = {
+   'default': {
+       'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': BASE_DIR / 'db.sqlite3',
+   }
+}
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': get_env_var("DB_NAME", ''),
+#         'USER': get_env_var("USERNAME", ''),
+#         'PASSWORD': get_env_var("PASSWORD", ''),
+#         'HOST': get_env_var("HOST", ''),
+#         'PORT': get_env_var('PORT', ''),
+#     }
+# };
+
+...
+```
+Commente la première configuration de la base de données (DATABASES) et décommente la deuxième. Ce que tu dois avoir est donc :
+
+```python
+...
+
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': get_env_var("DB_NAME", ''),
+        'USER': get_env_var("USERNAME", ''),
+        'PASSWORD': get_env_var("PASSWORD", ''),
+        'HOST': get_env_var("HOST", ''),
+        'PORT': get_env_var('PORT', ''),
+    }
+};
+
+...
+```
+
+4. Exécute les commandes suivantes pour faire la migration
 des modèles de base de données
 ```
 ./manage.py makemigrations
@@ -116,7 +180,32 @@ des modèles de base de données
 ./manage.py migrate
 ```
 
-### Nettoyage de la base de données
+### Création d'un super utilisateur pour l'espace admin
+```
+./manage.py createsuperuser
+```
+
+Tu peux juste renseigner le `username` et le `password`.
+
+### Démarrage du serveur de django
+```
+./manage.py runserver
+```
+Résultats dans le terminal, qui indique que tout va bien est :
+```
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+January 21, 2022 - 07:53:49
+Django version 3.2.6, using settings 'docs.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+```
+
+<br/>
+
+## Nettoyage de la base de données
 Cette section est facultative. Mais, il peut arriver un jour où tu aurras besoin de néttoyer toutes
 les tables de la base de données. Alors, c'est simple. Pour y parvcenir, tu peux simplement supprimer
 tous les schémas que tu as créé. Dans cet exemple, il n'y a qu'un seul schéma que tu vas néttoyer : `public`.
@@ -149,31 +238,6 @@ GRANT ALL ON SCHEMA public TO user_name;
 ```sql
 GRANT ALL ON SCHEMA public TO public;
 ```
-
-### Création d'un super utilisateur pour l'espace admin
-```
-./manage.py createsuperuser
-```
-
-Vous pouvez renseigner juste le `username` et le `password`.
-
-### Démarrage du serveur de django
-```
-./manage.py runserver
-```
-Résultats dans le terminal, qui indique que tout va bien est :
-```
-Watching for file changes with StatReloader
-Performing system checks...
-
-System check identified no issues (0 silenced).
-January 21, 2022 - 07:53:49
-Django version 3.2.6, using settings 'docs.settings'
-Starting development server at http://127.0.0.1:8000/
-Quit the server with CONTROL-C.
-```
-
-<br/>
 
 ## Hébergement du serveur sur Heroku
 Concernant l'hébergement du serveur sur Heroku, tu dois faire les choses suivantes:
