@@ -58,6 +58,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'EXCEPTION_HANDLER': 'core.exception.api_exc_handler',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 8,
 };
@@ -160,8 +161,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles');
-STATIC_URL  = '/static/'
+STATIC_URL = '/static/';
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    # '/var/www/static/',
+];
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
