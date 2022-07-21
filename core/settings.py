@@ -175,4 +175,11 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Email settings
+EMAIL_HOST          = get_env_var('EMAIL_HOST', '');              # The SMTP host name (smtp.gmail.com)
+EMAIL_PORT          = get_env_var('EMAIL_PORT', '');              # The port (587)
+EMAIL_HOST_USER     = get_env_var('EMAIL_HOST_USER', None);       # Username (coditheck.guild@gmail.com)
+EMAIL_HOST_PASSWORD = get_env_var('EMAIL_HOST_PASSWORD', None);   # password
+EMAIL_USE_TLS       = True if get_env_var('EMAIL_USE_TLS') == '1' else False; # Cipher code TLS
+# EMAIL_USE_SSL       = False;      # ...
 

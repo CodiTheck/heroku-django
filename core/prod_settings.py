@@ -1,3 +1,4 @@
+import os
 import dj_database_url
 from core.settings import *
 from stdlib import get_env_var
@@ -15,6 +16,11 @@ DATABASES['default'].update(dj_database_url.config());
 
 # HOST list allowed by this server
 ALLOWED_HOSTS = ['heroku-dj.herokuapp.com'];
+
+# Statics directories creation
+STATIC_TMP = os.path.join(BASE_DIR, 'static');
+os.makedirs(STATIC_TMP, exist_ok=True);
+os.makedirs(STATIC_ROOT, exist_ok=True);
 
 # CONFIGURATION DE WHITENOISE
 # ================================================================
