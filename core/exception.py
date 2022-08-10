@@ -12,7 +12,7 @@ def api_exc_handler(exc, context):
     else:
         # exec_list = str(exc).split('DETAIL: ');
         # return Response({'error_message': exec_list[-1]}, status=400);
-        return Response({'error_message': list(exc.args)}, status=400);
+        return Response({'error_message': (0xFF, list(exc.args))}, status=503);
 
 
 pass;
