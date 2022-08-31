@@ -52,3 +52,9 @@ urlpatterns = [
 ];
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT);
+
+# Setting the titles of the admin interface
+admin.sites.AdminSite.site_header = "CodiTheck Django Admin";
+admin.sites.AdminSite.site_title  = "CodiTheck Django";
+admin.sites.AdminSite.index_title = "CodiTheck Django";
+
