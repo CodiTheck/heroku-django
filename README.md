@@ -114,6 +114,12 @@ PORT=5432
 
 > Si le port `5432` ne marche pas, alors essayez avec le port `5433`.
 
+Ensuite exécute la commande suivante pour définir les variables du fichier  `.env`
+dans l'environnement virtuel.
+```sh
+source .env
+```
+
 3. Ouvre le fichier `core/settings.py` et rend toi à la ligne où c'est marqué `Database` dans les commentaires.
 
 ```python
