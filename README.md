@@ -100,7 +100,7 @@ car tu en aura besoin pour configurer ton programme. Dans le cas présent, on a 
 ### Création des connexions du serveur WEB à la base de données
 1. Il faut créer un fichier `.env` à la racine du dossier du projet à partir de l'exemple `.env_example` :
 ```sh
-cp .env_example .env
+cp app/.env_example app/.env
 ```
 
 2. Insérer les informations que tu avais noté à l'étape `4` de la `seconde partie` de la procédure de `Création de la base de données` dans le fichier `.env` :
@@ -138,11 +138,11 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': get_env_var("DB_NAME", ''),
-#         'USER': get_env_var("USERNAME", ''),
-#         'PASSWORD': get_env_var("PASSWORD", ''),
-#         'HOST': get_env_var("HOST", ''),
-#         'PORT': get_env_var('PORT', ''),
+#         'NAME': os.getenv("DB_NAME", ''),
+#         'USER': os.getenv("USERNAME", ''),
+#         'PASSWORD': os.getenv("PASSWORD", ''),
+#         'HOST': os.getenv("HOST", ''),
+#         'PORT': os.getenv('PORT', ''),
 #     }
 # };
 
@@ -166,11 +166,11 @@ Commente la première configuration de la base de données (DATABASES) et décom
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': get_env_var("DB_NAME", ''),
-        'USER': get_env_var("USERNAME", ''),
-        'PASSWORD': get_env_var("PASSWORD", ''),
-        'HOST': get_env_var("HOST", ''),
-        'PORT': get_env_var('PORT', ''),
+        'NAME': os.getenv("DB_NAME", ''),
+        'USER': os.getenv("USERNAME", ''),
+        'PASSWORD': os.getenv("PASSWORD", ''),
+        'HOST': os.getenv("HOST", ''),
+        'PORT': os.getenv('PORT', ''),
     }
 };
 
@@ -409,7 +409,8 @@ une fois en ligne.
 Il s'agit de configurer le dépôt local avec le dépôt distant du serveur SVM de Heroku. Pour ce faire,
 tape juste la commande suivante: si on suppose que ton application s'appelle : `monapplication`
 
-> **NOTE** : Cette étape n'est plus necessaire, si tu as suivis l'`étape 1 : Créer l'application sur Heroku` à la lettre. Car lorsqu'on crée une
+> **NOTE** : Cette étape n'est plus necessaire, si tu as suivis l'`étape 1 : Créer l'application sur Heroku`
+> à la lettre. Car lorsqu'on crée une
 > application heroku via le CLI dans le dossier d'un projet déjà
 > configuré avec Git, alors, heroku profite pour connecter le dépôt local
 > de l'application au dépôt distant de l'application qui est créée sur 

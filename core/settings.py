@@ -33,11 +33,11 @@ SECRET_KEY = get_env_var("SECRET_KEY", 'django-insecure-a&jd06&zn73dseo6)zncr1pt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# if you want allow all hosts, you put ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -117,11 +117,11 @@ DATABASES = {
 # DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': get_env_var("DB_NAME", ''),
-#        'USER': get_env_var("USERNAME", ''),
-#        'PASSWORD': get_env_var("PASSWORD", ''),
-#        'HOST': get_env_var("HOST", ''),
-#        'PORT': get_env_var('PORT', ''),
+#        'NAME': os.getenv("DB_NAME", ''),
+#        'USER': os.getenv("USERNAME", ''),
+#        'PASSWORD': os.getenv("PASSWORD", ''),
+#        'HOST': os.getenv("HOST", ''),
+#        'PORT': os.getenv('PORT', ''),
 #    }
 # };
 
