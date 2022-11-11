@@ -112,7 +112,7 @@ car tu en aura besoin pour configurer ton programme. Dans le cas présent, on a 
 
 | FIELDS   | VALUES         |
 | ------   | ------         |
-| DB_NAME  | d_name         |
+| DB_NAME  | db_name        |
 | USERNAME | user_name      |
 | PASSWORD | secretpassword |
 
@@ -129,7 +129,7 @@ cp .env_example .env
 
 | FIELDS   | VALUES         |
 | ------   | ------         |
-| DB_NAME  | d_name         |
+| DB_NAME  | db_name        |
 | USERNAME | user_name      |
 | PASSWORD | secretpassword |
 | HOST     | 127.0.0.1      |
