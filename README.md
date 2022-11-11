@@ -4,6 +4,7 @@
 
 
 ## Téléchargement du dépôt
+
 ```sh
 git clone https://github.com/CodiTheck/heroku-django.git
 ```
@@ -14,15 +15,18 @@ Fais en bonne usage !
 ## Installation et configuration
 
 ### Installation de python3
+
 ```sh
 sudo apt install python3
 sudo apt install python3-pip
 ```
+
 Il faut s'assurer de la version de python qui est installée. La version de python
 utilisée est `python 3.9.12`. Tu peux aussi utiliser la version `3.8`.
 
 
 ### Installation de venv
+
 ```sh
 sudo apt install python3-venv
 ```
@@ -32,23 +36,29 @@ sudo pip3 install virtualenv
 ```
 
 ### Créer un environnement virtuel
+
 ```sh
 python3 -m venv env
 ```
+
 OU
+
 ```sh
 virtualenv env -p python3
 ```
 
 ### Démarrage de l'environnement
+
 ```sh
 source env/bin/activate
 ```
 
 ### Installation des dépendances
+
 ```sh
 pip install -r requirements.txt
 ```
+
 <br/>
 
 ### Création de la base de données
@@ -56,18 +66,23 @@ La création de la base de données se fera en deux parties :
 
 #### Première partie
 Le système de gestion de base de données utilisé est `PostgreSQL`. Pour l'installer, tape la commande suivante :
+
 ```sh
 sudo apt install postgresql
 ```
 
 Démarre ensuite le service du SGBDR avec la commande suivante:
+
 ```sh
 sudo service postgresql start
 ```
+
 Connecte toi en mode `root` avec les deux commandes suivantes :
+
 ```sh
 sudo su - postgres
 ```
+
 ```sh
 psql
 ```
@@ -75,35 +90,53 @@ psql
 #### Seconde partie
 Exécutez les trois commandes SQL suivantes :
 1. Création d'un utilisateur :
+
 ```sql
 CREATE USER user_name WITH ENCRYPTED PASSWORD 'secretpassword' LOGIN NOCREATEDB;
 ```
 
 2. Création de la base de données pour l'utilisateur précédement créé :
+
 ```sql
 CREATE DATABASE db_name OWNER user_name;
 ```
 
 3. Attribution du droit de connexion à la base de données à l'utilisateur :
+
 ```sql
 GRANT CONNECT ON DATABASE db_name TO user_name;
 ```
 
 4. Note bien les information que tu as utilisées pour créer l'utilisateur et la base de données quelque part,
 car tu en aura besoin pour configurer ton programme. Dans le cas présent, on a :
-- Nom de la base de données [DB_NAME] : db_name
-- Non de l'utilisateur [USERNAME] : user_name
-- Mot de passe [PASSWORD] : secretpassword
+
+| FIELDS   | VALUES         |
+| ------   | ------         |
+| DB_NAME  | d_name         |
+| USERNAME | user_name      |
+| PASSWORD | secretpassword |
 
 5. Déconnectez vous enfin du SGBDR en faisant deux fois `CTRL + D`.
 
 ### Création des connexions du serveur WEB à la base de données
 1. Il faut créer un fichier `.env` à la racine du dossier du projet à partir de l'exemple `.env_example` :
+
 ```sh
-cp app/.env_example app/.env
+cp .env_example .env
 ```
 
 2. Insérer les informations que tu avais noté à l'étape `4` de la `seconde partie` de la procédure de `Création de la base de données` dans le fichier `.env` :
+
+| FIELDS   | VALUES         |
+| ------   | ------         |
+| DB_NAME  | d_name         |
+| USERNAME | user_name      |
+| PASSWORD | secretpassword |
+| HOST     | 127.0.0.1      |
+| PORT     | 5432           |
+
+Voici donc le contenu du fichier `.env` :
+
 ```
 DB_NAME=db_name
 USERNAME=user_name
@@ -116,6 +149,7 @@ PORT=5432
 
 Ensuite exécute la commande suivante pour définir les variables du fichier  `.env`
 dans l'environnement virtuel.
+
 ```sh
 source .env
 ```
@@ -148,6 +182,7 @@ DATABASES = {
 
 ...
 ```
+
 Commente la première configuration de la base de données (DATABASES) et décommente la deuxième. Ce que tu dois avoir est donc :
 
 ```python
@@ -179,14 +214,17 @@ DATABASES = {
 
 4. Exécute les commandes suivantes pour faire la migration
 des modèles de base de données
+
 ```
 ./manage.py makemigrations
 ```
+
 ```
 ./manage.py migrate
 ```
 
 ### Création d'un super utilisateur pour l'espace admin
+
 ```
 ./manage.py createsuperuser
 ```
@@ -194,10 +232,13 @@ des modèles de base de données
 Tu peux juste renseigner le `username` et le `password`.
 
 ### Démarrage du serveur de django
+
 ```
 ./manage.py runserver
 ```
+
 Résultats dans le terminal, qui indique que tout va bien est :
+
 ```
 Watching for file changes with StatReloader
 Performing system checks...
@@ -217,36 +258,49 @@ les tables de la base de données. Alors, c'est simple. Pour y parvcenir, tu peu
 tous les schémas que tu as créé. Dans cet exemple, il n'y a qu'un seul schéma que tu vas néttoyer : `public`.
 <br/>
 Connecte toi en mode `root` avec les deux commandes suivantes :
+
 ```sh
 sudo su - postgres
 ```
+
 ```sh
 psql
 ```
 
 Ensuite connecte toi en tent que `user_name` à `db_name` :
+
 ```sh
 \c user_name db_name
 ```
+
 Maintenant, tu peut supprimer le schéma :
+
 ```sql
 DROP SCHEMA public CASCADE;
 ```
+
 Ensuite tu le recrée avec la commande SQL suivante :
+
 ```sql
 CREATE SCHEMA public;
 ```
+
 Et enfin, il ne faut pas oublier de redonner les droit d'accès du schéma à l'utilisateur utilisé par
 ton application pour se connecter.
+
 ```sql
 GRANT ALL ON SCHEMA public TO user_name;
 ```
+
 ```sql
 GRANT ALL ON SCHEMA public TO public;
 ```
 
+<br/>
+
 ## Hébergement du serveur sur Heroku
 Concernant l'hébergement du serveur sur Heroku, tu dois faire les choses suivantes:
+
 1. créer l'application sur Heroku en premier;
 2. clonner ce projet dans votre répertoire de travail;
 3. redéfinir l'URL HOST du serveur de l'application dans le fichier `core/prod_settings.py`;
@@ -266,9 +320,11 @@ commandes suivantes:
 ![alt](./images/terminal_djproject.png)
 
 #### 1. Installer le CLI de Heroku
+
 ```sh
 sudo snap install heroku --classic
 ```
+
 > **NOTE** : Si tu utilise `Kali`, alors tu dois taper cette commande
 > `sudo systemctl start snapd.service` avant de pouvoir installer le
 > CLI de heroku par `snap`. C'est à dire avant que la commande ci-dessus
@@ -277,6 +333,7 @@ sudo snap install heroku --classic
 #### 2. Se connecter à ton compte
 Une fois l'installation terminé, tu peux maintenant te connecter à ton
 compte `Heroku` via le CLI.
+
 ```sh
 heroku login
 ```
@@ -291,6 +348,7 @@ heroku: Press any key to open up the browser to login or q to exit:
 Après avoir saisi tes identifiants dans le navigateur qui s'est ouvert,
 si tout va bien, alors tu arras les deux derniers messages suivants
 imprimés dans ton terminal.
+
 ```
 ...
 
@@ -299,44 +357,49 @@ Logged in as monemail@email.com
 ```
 
 Au cas où la commande `heroku login` t'affiche l'erreur suivante :
+
 ```
 Command 'heroku' is available in '/snap/bin/heroku'
 The command could not be located because '/snap/bin' is not included in the PATH environment variable.
 heroku: command not found
 ```
+
 Alors tape la commande suivante pour résoudre son cas :
+
 ```sh
 sudo ln -s /snap/bin/heroku /bin/heroku
 ```
+
 puis reéssaie la commande `heroku login`.
 
 
 #### 3. Configure ton projet avec Git
-
 Si tu avais déjà configuré ton projet avec Git ou tu avais clonner mon
 dépôt comme je l'ai indiqué plus haut, alors pas besoin d'exécuter la 
 commande suivante. Dans le cas contraire, tu dois exécuter la commande:
+
 ```sh
 git init
 ```
 
-
 > **NOTE** : Ceci est necessaire pour la suite.
-
 
 #### 4. Créer ton application sur heroku
 Si on suppose que le nom que tu veux donner à ton application est `monapplication`, alors tu exécute la commande suivante :
+
 ```sh
 heroku create monapplication
 ```
 
 #### 5. Créer une base de données à ton application
+
 ```sh
 heroku addons:create heroku-postgresql
 ```
 
 ### Redéfinir l'URL HOST du serveur
 Tu dois redéfinir l'URL HOST du serveur de l'application dans le fichier `core/prod_settings.py`
+
 ```python
 import dj_database_url
 from core.settings import *
@@ -366,7 +429,9 @@ ALLOWED_HOSTS = ['heroku-dj.herokuapp.com'];
 MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware'];
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage';
 ```
+
 Il s'agit de modifier cette ligne :
+
 ```python
 # ...
 
@@ -374,7 +439,9 @@ ALLOWED_HOSTS = ['heroku-dj.herokuapp.com'];
 
 # ...
 ```
+
 en :
+
 ```python
 # ...
 
@@ -418,22 +485,28 @@ tape juste la commande suivante: si on suppose que ton application s'appelle : `
 
 Voici donc la commande pour connecter ton dépôt local au dépôt distant de
 Heroku :
+
 ```sh
 heroku git:remote -a monapplication
 ```
 
 ### Envoyer l'application par Git au serveur Heroku.
 En supposant que tout s'est bien passé, alors tu es enfin prêt à déployer ton application en ligne !
+
 - tu les changements précédement apportés au fichier `core/prod_settings.py` :
+
 ```sh
 git add -A
 ```
+
 ensuite :
+
 ```sh
 git commit -m "Allowed HOST is defined and All is ready !"
 ```
 
-- tu pousses le projet sur le serveur SVN de `Heroku` en faisant :
+- tu pousses le projet sur le serveur GIT de `Heroku` en faisant :
+
 ```sh
 git push heroku master
 ```
@@ -442,6 +515,7 @@ git push heroku master
 Si l'envoie de l'application a été un succès, alors n'oublie pas de créer
 les différentes tables de la base de données de ton application sur
 Heroku. Pour ce faire, exécute la commande suivante :
+
 ```sh
 heroku run python manage.py migrate
 ```
